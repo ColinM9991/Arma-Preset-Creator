@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ArmaPresetCreator.Web.Models;
 using ArmaPresetCreator.Web.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace ArmaPresetCreator.Web
 {
@@ -23,7 +23,7 @@ namespace ArmaPresetCreator.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(setup =>
+            services.AddControllersWithViews(setup =>
             {
                 setup.InputFormatters.RemoveType<NewtonsoftJsonPatchInputFormatter>();
             }).AddNewtonsoftJson();
@@ -38,6 +38,11 @@ namespace ArmaPresetCreator.Web
             services.AddScoped<IArmaPresetRequestCreator, ArmaPresetRequestCreator>();
             services.AddScoped<IMapper, Mapper>(factory => new Mapper(AutoMapperConfigurationCreator.CreateMappingConfiguration()));
             services.AddHttpClient<SteamApiService>(client => client.BaseAddress = new Uri(steamApiUrl));
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,6 +72,15 @@ namespace ArmaPresetCreator.Web
                 routes.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+            });
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }

@@ -17,7 +17,7 @@ namespace ArmaPresetCreator.Web.Models
         /// The URL of the addon. This should be a Steam file or workshop item URL.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [RegularExpression(@"https:\/\/steamcommunity.com\/sharedfiles\/filedetails\/\?id=[0-9]+", ErrorMessage = "Only Steam Workshop URL's can be used for addon URL's.")]
+        [RegularExpression(@"https:\/\/steamcommunity.com\/sharedfiles\/filedetails\/\?id=[0-9]+", ErrorMessage = "Only Steam Workshop URLs can be used.")]
         public string Url { get; set; }
     }
 }
