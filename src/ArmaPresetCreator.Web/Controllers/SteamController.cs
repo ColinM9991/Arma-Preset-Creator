@@ -39,6 +39,11 @@ namespace ArmaPresetCreator.Web.Controllers
             logger.LogInformation("Steam Workshop Item Request for {publishedItemId}", publishedItemId);
 
             var collectionDetails = await steamApiRepository.GetPublishedItemDetailsAsync(publishedItemId);
+            if (collectionDetails == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(collectionDetails);
         }
     }

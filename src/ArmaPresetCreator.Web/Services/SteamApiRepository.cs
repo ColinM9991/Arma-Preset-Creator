@@ -28,7 +28,7 @@ namespace ArmaPresetCreator.Web.Services
         public async Task<SteamWorkshopItem> GetPublishedItemDetailsAsync(long workshopItemId)
         {
             var steamWorkshopPublishedItemDetails = await steamApiService.GetPublishedItemDetailsAsync(workshopItemId);
-            if (steamWorkshopPublishedItemDetails?.Response?.PublishedFilesDetails?.Length == 0)
+            if (steamWorkshopPublishedItemDetails.Response.IsInvalid())
                 return null;
 
             var steamWorkshopPublishedFile = steamWorkshopPublishedItemDetails.Response.PublishedFilesDetails[0];
