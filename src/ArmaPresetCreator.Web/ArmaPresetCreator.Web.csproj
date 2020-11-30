@@ -6,6 +6,8 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
     <UserSecretsId>525bb466-97b1-43c0-be92-2f72f44273bb</UserSecretsId>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>

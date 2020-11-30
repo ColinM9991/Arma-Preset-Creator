@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  armapresetcreator:
+    image: ${DOCKER_REGISTRY-}armapresetcreator
+    build:
+      context: .
+      dockerfile: ./src/ArmaPresetCreator.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "80:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
