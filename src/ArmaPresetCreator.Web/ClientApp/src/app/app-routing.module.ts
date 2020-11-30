@@ -6,11 +6,13 @@ import { ParameterisedGeneratorComponent } from './parameterised-generator/param
 const routes: Routes = [
   {
     path: '',
-    component: GeneratorComponent
+    component: GeneratorComponent,
+    pathMatch: 'full'
   },
   {
     path: ':publishedItemId',
-    component: ParameterisedGeneratorComponent
+    component: ParameterisedGeneratorComponent,
+    pathMatch: 'full'
   }
 ];
 
