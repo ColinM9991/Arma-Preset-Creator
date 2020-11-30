@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ArmaPresetCreator.Web.Models;
 using ArmaPresetCreator.Web.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Hosting;
 
@@ -26,7 +27,12 @@ namespace ArmaPresetCreator.Web
             services.AddControllersWithViews(setup =>
             {
                 setup.InputFormatters.RemoveType<NewtonsoftJsonPatchInputFormatter>();
-            }).AddNewtonsoftJson();
+            })
+                .ConfigureApiBehaviorOptions(opts =>
+                {
+                    opts.InvalidModelStateResponseFactory = ctx => new BadRequestObjectResult(ctx.ModelState);
+                })
+                .AddNewtonsoftJson();
 
             var steamConfigurationSection = Configuration.GetSection("Steam");
             var steamApiUrl = steamConfigurationSection.Get<SteamOptions>()?.ApiUrl;

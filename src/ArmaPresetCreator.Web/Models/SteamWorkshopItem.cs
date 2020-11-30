@@ -53,5 +53,14 @@ namespace ArmaPresetCreator.Web.Models
         /// </summary>
         [Required]
         public Uri Url => new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={PublishedFileId}");
+
+        /// <summary>
+        /// Determines if the item type is a type of addon or mod which should be added to the preset.
+        /// </summary>
+        /// <returns>
+        /// True if the item is an addon.
+        /// This is the case when the FileType is 0 and Flags are 5632.
+        /// </returns>
+        public bool IsAddon() => FileType == 0 && Flags == 5632;
     }
 }
