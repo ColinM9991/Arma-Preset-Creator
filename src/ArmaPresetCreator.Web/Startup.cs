@@ -58,11 +58,6 @@ namespace ArmaPresetCreator.Web
                 app.UseHsts();
             }
 
-            app.UseCors(builder =>
-            {
-                // Add CORS domain here
-            });
-
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
