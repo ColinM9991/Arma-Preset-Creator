@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { saveAs } from 'file-saver';
 
 @Injectable({
@@ -9,20 +8,12 @@ import { saveAs } from 'file-saver';
 export class GeneratorService {
 
   constructor(
-    private httpClient: HttpClient,
-    private toastrService: ToastrService
+    private httpClient: HttpClient
   ) { }
 
-  public generatePreset(publishedItemId: number) {
-    return this.httpClient.get(`/api/steam/workshop/publisheditems/${publishedItemId}`)
-      .subscribe(
-        res => this.httpClient.post(`/api/arma/preset/generate`, res, { responseType: 'blob' })
-          .subscribe(
-            presetRes => {
-              saveAs(presetRes, `${res["name"]}.html`);
-              this.toastrService.success('Downloading preset');
-            },
-            () => this.toastrService.error('Error occurred when generating preset, please ensure workshop item ID is correct.')),
-        () => this.toastrService.error('Error occurred when retrieving Steam Workshop details, please ensure ID is correct.'));
+  public async generatePreset(publishedItemId: number) {
+    const res = await this.httpClient.get(`/api/steam/workshop/publisheditems/${publishedItemId}`).toPromise();
+    const presetRes = await this.httpClient.post(`/api/arma/preset/generate`, res, { responseType: 'blob' }).toPromise();
+    saveAs(presetRes, `${res["name"]}.html`);
   }
 }
