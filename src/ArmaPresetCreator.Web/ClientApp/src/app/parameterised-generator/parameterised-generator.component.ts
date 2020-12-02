@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneratorService } from '../generator.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,10 +15,16 @@ export class ParameterisedGeneratorComponent {
   constructor(
     private generatorService: GeneratorService,
     toastrService: ToastrService,
-    activatedRoute: ActivatedRoute) {
+    activatedRoute: ActivatedRoute,
+    router: Router) {
     activatedRoute.params.subscribe(params => {
       this.generated = false;
       const publishedItemId = params.publishedItemId;
+      if(!Number(publishedItemId)){
+        router.navigate(['/']);
+        return;
+      }
+
       if (publishedItemId) {
         this.generatorService
           .generatePreset(publishedItemId)
