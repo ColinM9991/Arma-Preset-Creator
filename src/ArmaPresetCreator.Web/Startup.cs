@@ -54,6 +54,7 @@ namespace ArmaPresetCreator.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<RequestLogMiddleware>();
+            app.UseMiddleware<ErrorSuppressionMiddleware>();
 
             if (env.IsDevelopment())
             {

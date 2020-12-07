@@ -34,14 +34,14 @@ namespace ArmaPresetCreator.Web.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(406)]
         [ProducesResponseType(typeof(SteamWorkshopItem), 200)]
-        public async Task<IActionResult> GetWorkshopPublishedItemDetails([Required]long publishedItemId)
+        public async Task<IActionResult> GetWorkshopPublishedItemDetails([Required] long publishedItemId)
         {
             logger.LogInformation("Steam Workshop Item Request for {publishedItemId}", publishedItemId);
 
             var collectionDetails = await steamApiRepository.GetPublishedItemDetailsAsync(publishedItemId);
             if (collectionDetails == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid workshop item id");
             }
 
             return Ok(collectionDetails);

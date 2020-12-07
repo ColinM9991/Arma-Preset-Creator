@@ -45,7 +45,7 @@ export class GeneratorComponent implements OnInit {
     this.isGenerating = true;
     this.generatorService.generatePreset(publishedItemId)
       .then(() => this.toastrService.success('Downloading Preset'))
-      .catch(() => this.toastrService.error('Error occurred when generating preset.'))
+      .catch(err => this.toastrService.error(err))
       .finally(() => this.isGenerating = false);
   }
 

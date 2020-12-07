@@ -29,8 +29,8 @@ export class ParameterisedGeneratorComponent {
         this.generatorService
           .generatePreset(publishedItemId)
           .then(() => this.generated = true)
-          .catch(() => {
-            toastrService.error('Error occurred when generating preset.');
+          .catch((err) => {
+            toastrService.error(err);
             this.generated = false;
             this.failed = true;
           });
