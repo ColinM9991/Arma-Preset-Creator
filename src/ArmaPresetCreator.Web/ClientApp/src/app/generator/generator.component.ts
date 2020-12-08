@@ -37,6 +37,9 @@ export class GeneratorComponent implements OnInit {
 
   generatePreset() {
     const publishedItemId = this.getPublishedItemId();
+    if (!publishedItemId) {
+      return;
+    }
 
     this.isGenerating = true;
     this.generatorService.generatePreset(publishedItemId)
@@ -47,9 +50,14 @@ export class GeneratorComponent implements OnInit {
 
   createHyperlink() {
     const publishedItemId = this.getPublishedItemId();
+    if (!publishedItemId) {
+      return;
+    }
 
     this.hyperlinkGenerated = true;
-    this.hyperlink = new URL(publishedItemId, window.location.href);
+    this.hyperlink = new URL(
+      publishedItemId.toString(),
+      window.location.href);
   }
 
   copyHyperlink() {
@@ -57,7 +65,7 @@ export class GeneratorComponent implements OnInit {
     this.toastrService.success('Copied!');
   }
 
-  getPublishedItemId() {
+  getPublishedItemId(): number {
     const publishedItemId = this
       .form
       .get('publishedItemId')
@@ -67,7 +75,16 @@ export class GeneratorComponent implements OnInit {
       return publishedItemId;
     }
 
-    const urlFormat = new URL(publishedItemId);
-    return urlFormat.searchParams.get('id');
+    try {
+      const urlFormat = new URL(publishedItemId);
+      const id = Number(urlFormat.searchParams.get('id'));
+      if (!id) {
+        throw 'Invalid ID';
+      }
+
+      return id;
+    } catch {
+      this.toastrService.error('Invalid ID or URL entered.');
+    }
   }
 }
