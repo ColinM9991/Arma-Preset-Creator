@@ -20,7 +20,8 @@ export class ParameterisedGeneratorComponent {
     activatedRoute.params.subscribe(params => {
       this.generated = false;
       const publishedItemId = params.publishedItemId;
-      if(!Number(publishedItemId)){
+      if (!Number(publishedItemId)) {
+        toastrService.error('Invalid share link, redirecting home');
         router.navigate(['/']);
         return;
       }
