@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ArmaPresetCreator.Web.Models;
 using ArmaPresetCreator.Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ArmaPresetCreator.Web.Controllers
 {
@@ -15,12 +14,10 @@ namespace ArmaPresetCreator.Web.Controllers
     public class SteamController : ControllerBase
     {
         private readonly ISteamApiRepository steamApiRepository;
-        private readonly ILogger<SteamController> logger;
 
-        public SteamController(ISteamApiRepository steamApiRepository, ILogger<SteamController> logger)
+        public SteamController(ISteamApiRepository steamApiRepository)
         {
             this.steamApiRepository = steamApiRepository;
-            this.logger = logger;
         }
 
         /// <summary>
@@ -36,8 +33,6 @@ namespace ArmaPresetCreator.Web.Controllers
         [ProducesResponseType(typeof(SteamWorkshopItem), 200)]
         public async Task<IActionResult> GetWorkshopPublishedItemDetails([Required] long publishedItemId)
         {
-            logger.LogInformation("Steam Workshop Item Request for {publishedItemId}", publishedItemId);
-
             var collectionDetails = await steamApiRepository.GetPublishedItemDetailsAsync(publishedItemId);
             if (collectionDetails == null)
             {

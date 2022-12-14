@@ -1,29 +1,16 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using ArmaPresetCreator.Web;
+using Microsoft.AspNetCore.Builder;
 using Serilog;
 
-namespace ArmaPresetCreator.Web
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration));
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webHostBuilder =>
-                {
-                    webHostBuilder
-                        .UseStartup<Startup>()
-                        .ConfigureAppConfiguration(configuration => configuration.AddEnvironmentVariables())
-                        .UseSerilog((hostingContext, loggerConfiguration) =>
-                            loggerConfiguration
-                                .ReadFrom.Configuration(hostingContext.Configuration)
-                                .Enrich.FromLogContext());
-                });
+var startup = new Startup(builder.Configuration);
 
-    }
-}
+startup.ConfigureServices(builder.Services);
+
+var app = builder.Build();
+startup.Configure(app, app.Environment);
+
+await app.RunAsync();

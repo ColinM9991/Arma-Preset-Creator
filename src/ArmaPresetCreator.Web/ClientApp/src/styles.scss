@@ -1,4 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-  padding-top: 4.5rem;
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-toastr/toastr';
+
+$spinner-width: 10em;
+
+.spinner-border {
+  width: $spinner-width;
+  height: $spinner-width;
+  border: 0.35em solid currentColor;
+  border-right-color: transparent;
 }

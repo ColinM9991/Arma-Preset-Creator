@@ -1,0 +1,24 @@
+.accordion--custom {
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    padding-left: 1rem;
+    background: #ffffff;
+
+    .accordion-button {
+      padding-left: 0;
+      background: #ffffff;
+    }
+  }
+
+  .accordion-button {
+    &:not(.collapsed) {
+      box-shadow: none;
+    }
+  }
+
+  .form-check-input {
+    margin-top: 0em;
+  }
+}

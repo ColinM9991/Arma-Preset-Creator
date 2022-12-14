@@ -42,6 +42,21 @@ namespace ArmaPresetCreator.Web.Models
         /// </remarks>
         [Required]
         public int FileType { get; set; }
+        
+        /// <summary>
+        /// The size of the workshop item in bytes.
+        /// </summary>
+        public long FileSize { get; set; }
+        
+        /// <summary>
+        /// The URL of the workshop item logo.
+        /// </summary>
+        public Uri PreviewUrl { get; set; }
+        
+        /// <summary>
+        /// Last updated time, as epoch, in seconds.
+        /// </summary>
+        public long TimeUpdated { get; set; }
 
         /// <summary>
         /// The workshop item dependencies.

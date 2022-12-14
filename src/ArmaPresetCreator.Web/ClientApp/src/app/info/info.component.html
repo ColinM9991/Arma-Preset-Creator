@@ -1,0 +1,100 @@
+<h1 class="display-5 text-center">FAQ</h1>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+              aria-expanded="true" aria-controls="collapseOne">
+        What is this?
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+         data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          <strong>Arma Preset Creator</strong>
+          was developed in 2016, by one person playing with a small community of friends, called <i>Family of
+          Gamers</i>, and aimed to solve the problem of having multiple preset configurations for Arma 3.
+          With no native support for importing Workshop collections as presets, the Arma Preset Creator integrated with
+          the Steam Web API to seamlessly generate a preset file capable of being imported to the Arma 3 Launcher, while
+          including all dependencies and sub-dependencies. There have been several revisions over the years. Most recent
+          has been a top-level domain change to revive the project after the developer temporarily stepped away in 2021.
+        </p>
+
+        <p>
+          The Arma Preset Creator has also inspired many to create their own, similar concepts, as well as receiving
+          positive feedback from many big names in the Arma community.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+              aria-expanded="false" aria-controls="collapseTwo">
+        How does it work?
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+         data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          This tool integrates with the <a href="https://partner.steamgames.com/doc/webapi_overview"
+                                                      target="_blank" class="text-decoration-none">Steam Web API</a> to
+          retrieve all mods in a collection.
+          It traverses the dependency graph as a tree, filtering out any duplicates that it has already retrieved
+          (example: CBA_A3). Doing this means you can download an importable preset file which contains all required
+          dependencies.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+              aria-expanded="false" aria-controls="collapseThree">
+        How do I use it?
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+         data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>
+          There are two ways to use this tool depending on whether you want to download or share a preset.
+        </p>
+
+        <details class="mb-2">
+          <summary>Downloading a preset</summary>
+          <p>
+            If you have received a link from a fellow community member you simply have to enable or disable any optional mods, of your preference, then click Download.
+          </p>
+          <p>
+            Otherwise, if you're here to create a preset:
+          </p>
+          <ol>
+            <li>Create or choose the Steam Workshop collections that you will create a preset from.</li>
+            <li>If you're adding more than one collection, click the green add button next to the Workshop ID input.</li>
+            <li>Paste the full URL, or just the ID from the URL, in the Workshop ID input(s) above.</li>
+            <li>Mark any optional collections as optional. This will allow players to toggle on/off certain mods at their preference, such as JSRS.</li>
+            <li>Type a preset name. While this is optional, it is recommended when using multiple collections. If none is specified, the name of the first mandatory collection is used.</li>
+            <li>Click 'Create'.</li>
+            <li>If you have specified an optional collection, enable any mods you'd like to include in the preset.</li>
+            <li>Scroll to the bottom and click Download.</li>
+            <li>Import the downloaded preset HTML file in the Arma 3 Launcher > Mods > Preset dropdown.</li>
+          </ol>
+        </details>
+
+        <details>
+          <summary>Sharing a preset</summary>
+          <ol>
+            <li>Create or choose the Steam Workshop collections that you will create a preset from.</li>
+            <li>If you're adding more than one collection, click the green add button next to the Workshop ID input.</li>
+            <li>Paste the full URL, or just the ID from the URL, in the Workshop ID input(s) above.</li>
+            <li>Mark any optional collections as optional. This will allow players to toggle on/off certain mods at their preference, such as JSRS.</li>
+            <li>Type a preset name. While this is optional, it is recommended when using multiple collections. If none is specified, the name of the first mandatory collection is used.</li>
+            <li>Click 'Share'. This will copy a link to your clipboard which you can share on Discord, or your community forums.</li>
+          </ol>
+        </details>
+      </div>
+    </div>
+  </div>
+</div>

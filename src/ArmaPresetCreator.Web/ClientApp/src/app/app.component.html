@@ -1,16 +1,32 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <span class="navbar-brand" href="#">Arma Preset Creator - by ColinM</span>
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="https://github.com/ColinM9991/Arma-Preset-Creator">Source Code</a>
-    </li>
-  </ul>
-</nav>
-<main role="main" class="container">
-  <div class="jumbotron">
-    <div class="form-group text-center">
-      <img class="mx-auto d-block img-fluid" src="../../assets/logo.png" alt="Logo" />
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand d-inline-block text-truncate" [routerLink]="['/']">Arma Preset Creator - by ColinM</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ColinM9991/Arma-Preset-Creator">Source Code</a>
+        </li>
+      </ul>
     </div>
+  </nav>
+</header>
+
+<div class="container py-4">
+  <article role="main" class="container">
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <img class="mx-auto d-block img-fluid" src="../../assets/logo.png" alt="Logo"/>
+    </div>
+  </article>
+  <div class="container">
     <router-outlet></router-outlet>
+    <section class="mt-4">
+      <app-info></app-info>
+    </section>
   </div>
-</main>
+</div>
+
+<footer class="pt-3 mt-4 text-muted border-top">
+  <div class="container">
+    © {{ date | date:'YYYY' }} ColinM
+  </div>
+</footer>

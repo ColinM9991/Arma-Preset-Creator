@@ -25,6 +25,8 @@ namespace ArmaPresetCreator.Web.Services
         {
             var requestUrl = CreateRequestUrl(publishedFileIds);
             var response = await httpClient.GetAsync(requestUrl);
+            response.EnsureSuccessStatusCode();
+            
             return JsonConvert.DeserializeObject<SteamApiResponse<SteamPublishedFileDto>>(await response.Content.ReadAsStringAsync());
         }
 
@@ -36,7 +38,7 @@ namespace ArmaPresetCreator.Web.Services
                 ["strip_description_bbcode"] = "1"
             };
 
-            for(int i = 0; i < publishedFileIds.Length; i++)
+            for(var i = 0; i < publishedFileIds.Length; i++)
             {
                 queryParameters.Add($"publishedfileids[{i}]", publishedFileIds[i].ToString());
             }

@@ -10,9 +10,13 @@ namespace ArmaPresetCreator.Web
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorSuppressionMiddleware> _logger;
 
-        public ErrorSuppressionMiddleware(RequestDelegate next)
+        public ErrorSuppressionMiddleware(
+            RequestDelegate next,
+            ILogger<ErrorSuppressionMiddleware> logger
+            )
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)

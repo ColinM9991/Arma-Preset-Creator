@@ -1,24 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { GeneratorComponent } from './generator/generator.component';
-import { ParameterisedGeneratorComponent } from './parameterised-generator/parameterised-generator.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { RouterModule, Routes } from '@angular/router';
+import {ParameterisedGeneratorComponent} from "./parameterised-generator/parameterised-generator.component";
+import {CollectionGeneratorComponent} from "./collection-generator/collection-generator.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    component: GeneratorComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: ':publishedItemId',
-    component: ParameterisedGeneratorComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    component: NotFoundComponent
-  }
+  { path: ':publishedItemId', component: ParameterisedGeneratorComponent },
+  { path: '', component: CollectionGeneratorComponent }
 ];
 
 @NgModule({

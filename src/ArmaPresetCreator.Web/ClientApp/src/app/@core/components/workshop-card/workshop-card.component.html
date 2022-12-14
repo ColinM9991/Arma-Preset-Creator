@@ -1,0 +1,32 @@
+<div class="card">
+  <img src="{{workshopItem.previewUrl.toString()}}" class="card-img-top mod-icon rounded-start" alt="{{workshopItem.name}}"/>
+  <div class="card-body">
+    <h5 class="card-title">
+      <a href="{{workshopItem.url}}" class="d-inline-block text-truncate text-decoration-none" style="max-width:100%"
+         target="_blank">{{workshopItem.name}}</a>
+    </h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <small class="text-muted">
+        File size
+        <app-file-size [sizeBytes]="workshopItem.fileSize"></app-file-size>
+      </small>
+    </li>
+    <li class="list-group-item">
+      <small class="text-muted">
+        Last updated {{getLastUpdatedDate(workshopItem) | date: 'dd MMM yyyy'}}
+      </small>
+    </li>
+  </ul>
+  <div class="card-footer">
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input"
+             name="optional_{{workshopCollectionId}}_{{workshopItem.publishedFileId}}"
+             id="optional_{{workshopCollectionId}}_{{workshopItem.publishedFileId}}" [disabled]="!canBeToggled"
+             [(ngModel)]="workshopItem.enabled">
+      <label class="form-check-label"
+             for="optional_{{workshopCollectionId}}_{{workshopItem.publishedFileId}}">Enabled</label>
+    </div>
+  </div>
+</div>

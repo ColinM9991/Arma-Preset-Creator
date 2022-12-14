@@ -20,7 +20,7 @@ namespace ArmaPresetCreator.Web
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -28,20 +28,22 @@ namespace ArmaPresetCreator.Web
             {
                 setup.InputFormatters.RemoveType<NewtonsoftJsonPatchInputFormatter>();
             })
-                .ConfigureApiBehaviorOptions(opts =>
-                {
-                    opts.InvalidModelStateResponseFactory = ctx => new BadRequestObjectResult(ctx.ModelState);
-                })
-                .AddNewtonsoftJson();
+            .ConfigureApiBehaviorOptions(opts =>
+            {
+                opts.InvalidModelStateResponseFactory = ctx => new BadRequestObjectResult(ctx.ModelState);
+            })
+            .AddNewtonsoftJson();
 
             var steamConfigurationSection = Configuration.GetSection("Steam");
-            var steamApiUrl = steamConfigurationSection.Get<SteamOptions>()?.ApiUrl;
+            var steamApiUrl = steamConfigurationSection.Get<SteamOptions>()!.ApiUrl;
             
             services.Configure<SteamOptions>(steamConfigurationSection);
-            services.AddScoped<RequestLogMiddleware>();
-            services.AddScoped<ISteamApiRepository, SteamApiRepository>();
+            
+            services
+                .AddScoped<ISteamApiRepository, SteamApiRepository>()
+                .Decorate<ISteamApiRepository, LoggingSteamApiRepository>();
+            
             services.AddScoped<ISteamApiService, SteamApiService>();
-            services.AddScoped<IArmaPresetRequestCreator, ArmaPresetRequestCreator>();
             services.AddScoped<IMapper, Mapper>(factory => new Mapper(AutoMapperConfigurationCreator.CreateMappingConfiguration()));
             services.AddHttpClient<SteamApiService>(client => client.BaseAddress = new Uri(steamApiUrl));
 
@@ -51,9 +53,8 @@ namespace ArmaPresetCreator.Web
             });
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(WebApplication app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<RequestLogMiddleware>();
             app.UseMiddleware<ErrorSuppressionMiddleware>();
 
             if (env.IsDevelopment())

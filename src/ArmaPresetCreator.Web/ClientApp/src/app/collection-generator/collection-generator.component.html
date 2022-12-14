@@ -1,0 +1,58 @@
+<form [formGroup]="form" class="form-horizontal">
+  <div class="form-horizontal">
+    <div class="row mb-3">
+      <label for="name" class="col-sm-2 col-form-label">Preset name</label>
+      <div class="col-sm-10">
+        <div class="form-row">
+          <input type="text" class="form-control" formControlName="name" id="name" title="Allows you to specify a name for the preset file. This is optional.
+
+If no name is specified, the name of the first workshop collection will be used instead." />
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="publishedItemId" class="col-sm-2 col-form-label">Workshop IDs</label>
+      <div class="col-sm-10" formArrayName="collectionItems">
+        <div *ngFor="let collectionItem of collectionItems.controls; index as j" [formGroupName]="j"
+             class="form-row mb-3">
+          <div class="input-group">
+            <div class="input-group-text" *ngIf="j > 0">
+              <div class="form-check form-switch" title="Mark as optional.
+
+Marking collections as optional allows users to opt into certain client side mods when generating the preset.">
+                <input type="checkbox" class=" form-check-input" id="optional{{j}}" formControlName="optional">
+                <label class="form-check-label ml-3" for="optional{{j}}">Optional</label>
+              </div>
+            </div>
+            <input id="publishedItemId" name="publishedItemId" type="text" class="form-control"
+                   placeholder="URL or ID of Steam Workshop Item" title="The URL or the ID of a Workshop Item that has dependencies or mods associated with it.
+
+Example: https://steamcommunity.com/sharedfiles/filedetails/?id=123456789" formControlName="publishedItemId">
+
+            <button class="btn btn-success" title="Add another workshop item" *ngIf="j === 0"
+                    (click)="addWorkshopItem()"
+                    [disabled]="collectionItems.controls.length === 5">
+              <i class="bi bi-plus-circle"></i>
+            </button>
+
+            <button class="btn btn-danger" title="Remove workshop item" *ngIf="j > 0" (click)="removeWorkshopItem(j)">
+              <i class="bi bi-dash-circle"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="text-center">
+        <button type="button" class="btn btn-primary mx-1" [disabled]="isGenerating || !form.valid"
+                (click)="generatePreset()">Create
+        </button>
+
+        <button type="button" class="btn btn-primary"
+                title="Creates a link to share this preset. The preset is generated every time, allowing you to keep players up to date with your mod requirements."
+                [disabled]="isGenerating || !form.valid" (click)="shareLink()">Share
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

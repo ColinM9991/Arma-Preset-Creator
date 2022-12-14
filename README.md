@@ -4,10 +4,13 @@
 
 This is a tool that I wrote some years back during my time playing Arma 3. My biggest pet peeve has always been the lack of support for converting Steam Workshop collections into presets that can be used within Bohemia Interactive's Arma 3 Launcher.
 
+Hosted publicly for your convenience [here](https://armapresetcreator.co.uk).
+
+Also available on DockerHub [here](https://hub.docker.com/r/colinm9991/arma-preset-creator).
+
 ## Dependencies
 
-.NET Core 5 - https://dotnet.microsoft.com/download/dotnet/5.0
-The Hosting Bundle is recommended as this will conditionally install all required components, for if you decide to use IIS to host this.
+[.NET Core 6](https://dotnet.microsoft.com/download/dotnet)
 
 ## Setup
 
@@ -35,3 +38,7 @@ POST /api/arma/preset/generate
 
 ...PAYLOD THAT WAS RETRIEVED FROM /api/steam/workshop/publisheditems/{workshopItemId}...
 ```
+
+## Similar projects
+
+https://github.com/a-sync/arma3pregen
