@@ -4,8 +4,6 @@
 
 This is a tool that I wrote some years back during my time playing Arma 3. My biggest pet peeve has always been the lack of support for converting Steam Workshop collections into presets that can be used within Bohemia Interactive's Arma 3 Launcher.
 
-This is hosted [here](http://www.armapresetcreator.com/)
-
 ## Dependencies
 
 .NET Core 5 - https://dotnet.microsoft.com/download/dotnet/5.0
