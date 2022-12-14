@@ -37,7 +37,7 @@ namespace ArmaPresetCreator.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(406)]
-        public IActionResult Generate([FromBody]SteamWorkshopItem steamWorkshopItem)
+        public IActionResult Generate([FromBody] SteamWorkshopItem steamWorkshopItem)
         {
             logger.LogInformation("Preset Generation Request for {@steamWorkshopItem}", steamWorkshopItem);
 

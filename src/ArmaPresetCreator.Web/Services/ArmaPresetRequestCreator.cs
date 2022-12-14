@@ -15,9 +15,9 @@ namespace ArmaPresetCreator.Web.Services
 
         public ArmaPresetRequest Create(SteamWorkshopItem steamWorkshopItem)
         {
-            if(steamWorkshopItem == null || steamWorkshopItem?.Items.Length == 0)
+            if(steamWorkshopItem?.Items == null || steamWorkshopItem.Items?.Length == 0)
             {
-                throw new ArgumentException("Cannot be null or empty", nameof(steamWorkshopItem));
+                throw new UnsupportedWorkshopItemException();
             }
 
             var workshopItems = steamWorkshopItem.Items.ToList();
