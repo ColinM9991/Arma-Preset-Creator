@@ -8,6 +8,10 @@ This has been used by some members of the Bohemia Interactive community who will
 
 I decided to bring this offline recently as usage had begun to die down a bit and as I have lost interest in Arma 3 over due course. Instead I'm releasing the code here, without the client application, for anybody to continue hosting should they wish to do so.
 
+## Dependencies
+
+.NET Core 5
+
 ## Setup
 
 1. Clone the repository
