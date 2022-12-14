@@ -11,12 +11,14 @@ import { GeneratorComponent } from './generator/generator.component';
 import { GeneratorService } from './generator.service';
 import { CommonModule } from '@angular/common';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ParameterisedGeneratorComponent,
-    GeneratorComponent
+    GeneratorComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

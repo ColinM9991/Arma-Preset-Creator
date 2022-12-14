@@ -12,7 +12,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 export class GeneratorComponent implements OnInit {
 
   hyperlinkGenerated: boolean;
-  hyperlink: string;
+  hyperlink: URL;
 
   form: FormGroup;
   isGenerating: boolean;
@@ -29,18 +29,14 @@ export class GeneratorComponent implements OnInit {
         null,
         [
           Validators.required,
-          Validators.maxLength(24),
-          Validators.pattern('^[0-9]*$')
+          Validators.pattern(/(^[0-9]*$)|(^https:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?id=[0-9]*$)/)
         ]
       ]
     });
   }
 
   generatePreset() {
-    const publishedItemId = this
-      .form
-      .get('publishedItemId')
-      .value;
+    const publishedItemId = this.getPublishedItemId();
 
     this.isGenerating = true;
     this.generatorService.generatePreset(publishedItemId)
@@ -50,17 +46,28 @@ export class GeneratorComponent implements OnInit {
   }
 
   createHyperlink() {
+    const publishedItemId = this.getPublishedItemId();
+
+    this.hyperlinkGenerated = true;
+    this.hyperlink = new URL(publishedItemId, window.location.href);
+  }
+
+  copyHyperlink() {
+    this.clipboardService.copy(this.hyperlink.toString());
+    this.toastrService.success('Copied!');
+  }
+
+  getPublishedItemId() {
     const publishedItemId = this
       .form
       .get('publishedItemId')
       .value;
 
-    this.hyperlinkGenerated = true;
-    this.hyperlink = `https://armapresetcreator.com/${publishedItemId}`;
-  }
+    if (Number(publishedItemId)) {
+      return publishedItemId;
+    }
 
-  copyHyperlink() {
-    this.clipboardService.copy(this.hyperlink);
-    this.toastrService.success('Copied!');
+    const urlFormat = new URL(publishedItemId);
+    return urlFormat.searchParams.get('id');
   }
 }
