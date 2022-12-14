@@ -4,11 +4,7 @@
 
 This is a tool that I wrote some years back during my time playing Arma 3. My biggest pet peeve has always been the lack of support for converting Steam Workshop collections into presets that can be used within Bohemia Interactive's Arma 3 Launcher.
 
-This has been used by some members of the Bohemia Interactive community who will know it by the domain of `armapresetcreator.com`.
-
-I decided to bring this offline recently as usage had begun to die down a bit and as I have lost interest in Arma 3 over due course. Instead I'm releasing the code here, without the client application, for anybody to continue hosting should they wish to do so.
-
-I hosted this on an Ubuntu server instance, hosting the application as a systemd daemon and proxied with nginx.
+This is hosted [here](http://www.armapresetcreator.com/)
 
 ## Dependencies
 
