@@ -13,7 +13,7 @@ export class GeneratorComponent implements OnInit {
 
   hyperlinkGenerated: boolean;
   hyperlink: string;
-  
+
   form: FormGroup;
   isGenerating: boolean;
 
@@ -43,7 +43,10 @@ export class GeneratorComponent implements OnInit {
       .value;
 
     this.isGenerating = true;
-    this.generatorService.generatePreset(publishedItemId).add(() => this.isGenerating = false);
+    this.generatorService.generatePreset(publishedItemId)
+      .then(() => this.toastrService.success('Downloading Preset'))
+      .catch(() => this.toastrService.error('Error occurred when generating preset.'))
+      .finally(() => this.isGenerating = false);
   }
 
   createHyperlink() {
