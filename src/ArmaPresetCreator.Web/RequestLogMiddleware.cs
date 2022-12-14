@@ -16,7 +16,7 @@ namespace ArmaPresetCreator.Web
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            Uri GetAbsoluteUri(HttpRequest httpRequest)
+            static Uri GetAbsoluteUri(HttpRequest httpRequest)
             {
                 var uriBuilder = new UriBuilder(httpRequest.Scheme, httpRequest.Host.Host, httpRequest.Host.Port.GetValueOrDefault(), httpRequest.Path.Value ?? string.Empty);
                 return uriBuilder.Uri;
@@ -48,7 +48,7 @@ namespace ArmaPresetCreator.Web
 
                 await next(context);
             }
-            catch (Exception ex)
+            catch
             {
                 LogRequestMessage(context, true);
                 throw;

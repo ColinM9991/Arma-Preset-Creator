@@ -39,11 +39,6 @@ namespace ArmaPresetCreator.Web.Controllers
         [ProducesResponseType(406)]
         public IActionResult Generate([FromBody]SteamWorkshopItem steamWorkshopItem)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
             logger.LogInformation("Preset Generation Request for {@steamWorkshopItem}", steamWorkshopItem);
 
             try
