@@ -11,8 +11,6 @@ namespace ArmaPresetCreator.Web
             return new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<SteamPublishedFileDetailDto, SteamWorkshopItem>()
-                    .ForMember(dest => dest.ConsumerAppId, memberOptions => memberOptions.MapFrom(src => src.ConsumerAppId))
-                    .ForMember(dest => dest.Description, memberOptions => memberOptions.MapFrom(src => src.FileDescription))
                     .ForMember(dest => dest.FileType, memberOptions => memberOptions.MapFrom(src => src.FileType))
                     .ForMember(dest => dest.Flags, memberOptions => memberOptions.MapFrom(src => src.Flags))
                     .ForMember(dest => dest.PublishedFileId, memberOptions => memberOptions.MapFrom(src => src.PublishedFileId))

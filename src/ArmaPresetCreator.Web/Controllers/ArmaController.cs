@@ -30,7 +30,7 @@ namespace ArmaPresetCreator.Web.Controllers
         /// Generates an Arma launcher preset file with the specified <paramref name="steamWorkshopItem"/>.
         /// </summary>
         /// <param name="steamWorkshopItem"><see cref="SteamWorkshopItem"/> containing the Steam published item details.</param>
-        /// <returns><see cref="System.IO.FileStream"/> containing the launcher HTML preset.</returns>
+        /// <returns>The launcher HTML preset.</returns>
         /// <remarks>Produces a 400 Bad Request if any of the mandatory parameters are not supplied.</remarks>
         [HttpPost("preset/generate")]
         [Produces("text/html", "application/json")]

@@ -8,8 +8,6 @@ namespace ArmaPresetCreator.Web.Models
     /// </summary>
     public class SteamWorkshopItem
     {
-        private const string PublishedFileUrlPrefix = "https://steamcommunity.com/sharedfiles/filedetails/?id=";
-		
         /// <summary>
         /// The published file ID
         /// </summary>
@@ -22,17 +20,6 @@ namespace ArmaPresetCreator.Web.Models
         [Required]
         public string Name { get; set; }
 		
-        /// <summary>
-        /// The description submitted by the publisher.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The app id for which game the workshop item belongs to.
-        /// </summary>
-        [Required]
-        public long ConsumerAppId { get; set; }
-
         /// <summary>
         /// Used to determine whether the item is a mod, mission or collection.
         /// </summary>
@@ -65,6 +52,6 @@ namespace ArmaPresetCreator.Web.Models
         /// The URL which the published item can be browsed.
         /// </summary>
         [Required]
-        public Uri Url => new Uri($"{PublishedFileUrlPrefix}{PublishedFileId}");
+        public Uri Url => new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={PublishedFileId}");
     }
 }
