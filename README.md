@@ -8,6 +8,13 @@ This has been used by some members of the Bohemia Interactive community who will
 
 I decided to bring this offline recently as usage had begun to die down a bit and as I have lost interest in Arma 3 over due course. Instead I'm releasing the code here, without the client application, for anybody to continue hosting should they wish to do so.
 
+I hosted this on an Ubuntu server instance, hosting the application as a systemd daemon and proxied with nginx.
+
+## Dependencies
+
+.NET Core 5 - https://dotnet.microsoft.com/download/dotnet/5.0
+The Hosting Bundle is recommended as this will conditionally install all required components, for if you decide to use IIS to host this.
+
 ## Setup
 
 1. Clone the repository
