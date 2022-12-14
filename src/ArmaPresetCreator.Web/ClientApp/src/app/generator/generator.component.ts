@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneratorService } from '../generator.service';
+import { ToastrService } from 'ngx-toastr';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-generator',
@@ -9,11 +11,17 @@ import { GeneratorService } from '../generator.service';
 })
 export class GeneratorComponent implements OnInit {
 
+  hyperlinkGenerated: boolean;
+  hyperlink: string;
+  
   form: FormGroup;
   isGenerating: boolean;
+
   constructor(
     private generatorService: GeneratorService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private toastrService: ToastrService,
+    private clipboardService: Clipboard) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -36,5 +44,20 @@ export class GeneratorComponent implements OnInit {
 
     this.isGenerating = true;
     this.generatorService.generatePreset(publishedItemId).add(() => this.isGenerating = false);
+  }
+
+  createHyperlink() {
+    const publishedItemId = this
+      .form
+      .get('publishedItemId')
+      .value;
+
+    this.hyperlinkGenerated = true;
+    this.hyperlink = `https://armapresetcreator.com/${publishedItemId}`;
+  }
+
+  copyHyperlink() {
+    this.clipboardService.copy(this.hyperlink);
+    this.toastrService.success('Copied!');
   }
 }

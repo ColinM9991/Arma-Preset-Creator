@@ -4,7 +4,20 @@
       placeholder="Steam Workshop Id" style="width: 65%; margin-top: 1rem;" formControlName="publishedItemId">
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-info mx-auto d-block" (click)="generatePreset()"
-      [disabled]="isGenerating || !form.valid">Create</button>
+    <div class="text-center">
+      <button type="submit" class="btn btn-info mr-1" (click)="generatePreset()"
+        [disabled]="isGenerating || !form.valid">Create</button>
+
+      <button type="submit" class="btn btn-info" (click)="createHyperlink()"
+        [disabled]="isGenerating || !form.valid" title="Creates a link which can be embedded for users to download this preset.">Share</button>
+    </div>
+  </div>
+  <div class="form-group col-md-5 mx-auto d-block" *ngIf="hyperlinkGenerated">
+    <div class="input-group">
+      <span type="text" class="form-control">{{ hyperlink }}</span>
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" (click)="copyHyperlink()">Copy</button>
+      </span>
+    </div>
   </div>
 </form>

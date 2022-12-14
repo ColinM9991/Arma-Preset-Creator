@@ -10,6 +10,7 @@ import { ParameterisedGeneratorComponent } from './parameterised-generator/param
 import { GeneratorComponent } from './generator/generator.component';
 import { GeneratorService } from './generator.service';
 import { CommonModule } from '@angular/common';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    ClipboardModule,
     ToastrModule.forRoot()
   ],
   providers: [
