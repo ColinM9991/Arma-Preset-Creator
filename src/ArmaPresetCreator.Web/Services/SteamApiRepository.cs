@@ -40,10 +40,13 @@ namespace ArmaPresetCreator.Web.Services
             return steamWorkshopItem;
         }
 
-        private async Task<SteamWorkshopItem[]> GetChildrenAndIncludeNested(SteamPublishedFileDetailDto steamPublishedFileDetail)
+        private async Task<SteamWorkshopItem[]> GetChildrenAndIncludeNested(
+            SteamPublishedFileDetailDto steamPublishedFileDetail)
         {
-            var childrenDependencies = await GetAllDependenciesAsync(steamPublishedFileDetail);
-            var steamWorkshopItems = childrenDependencies.Select(workshopItem => mapper.Map<SteamWorkshopItem>(workshopItem)).ToList();
+            var childrenDependencies = await GetAllDependenciesAsync(new[] {steamPublishedFileDetail.PublishedFileId},
+                steamPublishedFileDetail);
+            var steamWorkshopItems = childrenDependencies
+                .Select(workshopItem => mapper.Map<SteamWorkshopItem>(workshopItem)).ToList();
 
             // Filter the Workshop Items to remove duplicate items where the same item exists, based on the PublishedFileId.
             return steamWorkshopItems.Distinct(new SteamWorkshopItemComparer()).ToArray();
@@ -54,12 +57,14 @@ namespace ArmaPresetCreator.Web.Services
         /// </summary>
         /// <param name="detail">The Steam workshop item to walk, can be a tree or leaf node.</param>
         /// <returns>All workshop items as a flat structure.</returns>
-        private async Task<IEnumerable<SteamPublishedFileDetailDto>> GetAllDependenciesAsync(params SteamPublishedFileDetailDto[] detail)
+        private async Task<IEnumerable<SteamPublishedFileDetailDto>> GetAllDependenciesAsync(long[] existingIds,
+            params SteamPublishedFileDetailDto[] detail)
         {
             var publishedFileDetails = new List<SteamPublishedFileDetailDto>();
 
             // Select the PublishedFileId from all children items, and return if there are none.
-            var workshopItemChildrenIds = detail.SelectMany(p => p.Children.Select(child => child.PublishedFileId)).ToArray();
+            var workshopItemChildrenIds = detail.SelectMany(p => p.Children.Select(child => child.PublishedFileId))
+                .Where(id => !existingIds.Contains(id)).ToArray();
             if (workshopItemChildrenIds.Length == 0)
                 return publishedFileDetails;
 
@@ -70,10 +75,13 @@ namespace ArmaPresetCreator.Web.Services
             var childPublishedFilesDetails = workshopItemChildren.Response.PublishedFilesDetails.ToList();
             if (childPublishedFilesDetails.Any(publishedFile => publishedFile.NumChildren > 0))
             {
-                var subChildrenWithNestedChildren = childPublishedFilesDetails.Where(publishedFile => publishedFile.NumChildren > 0).ToArray();
+                var existingIdsWithSubChildrenIds = existingIds.Concat(workshopItemChildrenIds).ToArray();
+                var subChildrenWithNestedChildren = childPublishedFilesDetails
+                    .Where(publishedFile => publishedFile.NumChildren > 0).ToArray();
 
                 // Recursively retrieve details from nested child items and add to the childPublishedFilesDetails collection
-                var nestedChildren = await GetAllDependenciesAsync(subChildrenWithNestedChildren);
+                var nestedChildren =
+                    await GetAllDependenciesAsync(existingIdsWithSubChildrenIds, subChildrenWithNestedChildren);
                 childPublishedFilesDetails.AddRange(nestedChildren);
             }
 
