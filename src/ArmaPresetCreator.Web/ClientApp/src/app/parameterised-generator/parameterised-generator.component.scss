@@ -4,11 +4,11 @@
     align-items: center;
     column-gap: 1rem;
     padding-left: 1rem;
-    background: #ffffff;
+    background: var(--apc-accordion-background);
 
     .accordion-button {
       padding-left: 0;
-      background: #ffffff;
+      background: var(--apc-accordion-background);
     }
   }
 

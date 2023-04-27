@@ -9,3 +9,13 @@ $spinner-width: 10em;
   border: 0.35em solid currentColor;
   border-right-color: transparent;
 }
+
+:root {
+   --apc-accordion-background: #ffffff;
+ }
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #151a30;
+  --bs-secondary-color: #ffffff;
+  --apc-accordion-background: #151a30;
+}
