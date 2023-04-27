@@ -77,6 +77,7 @@ namespace ArmaPresetCreator.Web
             {
                 endpoints.MapControllers();
             });
+            
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
