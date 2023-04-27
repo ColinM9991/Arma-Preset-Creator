@@ -95,7 +95,7 @@ export class ParameterisedGeneratorComponent implements OnInit {
     const armaPresetRequest = this.getArmaPresetRequest;
 
     const resultBlob = await this.presetApi.generatePreset(armaPresetRequest);
-    saveAs(resultBlob, `${armaPresetRequest.name}.html`);
+    saveAs(resultBlob, `${decodeURIComponent(armaPresetRequest.name)}.html`);
 
     this.isGeneratingPreset = false;
     this.toastrService.success("Preset downloaded successfully");
