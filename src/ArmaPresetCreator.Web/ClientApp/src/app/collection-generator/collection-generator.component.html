@@ -31,7 +31,7 @@ Example: https://steamcommunity.com/sharedfiles/filedetails/?id=123456789" formC
 
             <button class="btn btn-success" title="Add another workshop item" *ngIf="j === 0"
                     (click)="addWorkshopItem()"
-                    [disabled]="collectionItems.controls.length === 5">
+                    [disabled]="collectionItems.controls.length === MAX_ITEMS">
               <i class="bi bi-plus-circle"></i>
             </button>
 

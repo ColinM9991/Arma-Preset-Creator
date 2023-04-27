@@ -6,6 +6,8 @@ import {ArmaPresetApiService} from "../@core/services/arma-preset-api.service";
 import {Clipboard} from '@angular/cdk/clipboard';
 import {NavigationExtras, Router} from "@angular/router";
 
+const MAX_ITEMS = 20;
+
 export class PublishedItem {
   publishedItemId: number;
   optional: boolean;
@@ -26,6 +28,7 @@ export class PublishedItem {
 })
 export class CollectionGeneratorComponent {
 
+  readonly MAX_ITEMS = MAX_ITEMS;
   isGenerating: boolean = false;
   form: FormGroup;
 
@@ -95,7 +98,7 @@ export class CollectionGeneratorComponent {
   }
 
   addWorkshopItem(): void {
-    if (this.collectionItems.length >= 5)
+    if (this.collectionItems.length >= MAX_ITEMS)
       return;
 
     this.collectionItems.push(this.createWorkshopItemForm());
