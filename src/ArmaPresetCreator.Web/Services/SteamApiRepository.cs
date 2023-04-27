@@ -49,7 +49,7 @@ namespace ArmaPresetCreator.Web.Services
                 .Select(workshopItem => mapper.Map<SteamWorkshopItem>(workshopItem)).ToList();
 
             // Filter the Workshop Items to remove duplicate items where the same item exists, based on the PublishedFileId.
-            return steamWorkshopItems.Distinct(new SteamWorkshopItemComparer()).ToArray();
+            return steamWorkshopItems.Distinct(new SteamWorkshopItemComparer()).Where(x => x.IsAddon()).ToArray();
         }
 
         /// <summary>

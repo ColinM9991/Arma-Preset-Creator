@@ -73,9 +73,10 @@ namespace ArmaPresetCreator.Web.Models
         /// Determines if the item type is a type of addon or mod which should be added to the preset.
         /// </summary>
         /// <returns>
-        /// True if the item is an addon.
-        /// This is the case when the FileType is 0 and Flags are 5632.
+        /// True when the FileType is 0, otherwise false.
         /// </returns>
-        public bool IsAddon() => FileType == 0 && Flags == 5632;
+        public bool IsAddon() => FileType == 0;
+
+        public override string ToString() => $"{Name} {FileType}";
     }
 }
