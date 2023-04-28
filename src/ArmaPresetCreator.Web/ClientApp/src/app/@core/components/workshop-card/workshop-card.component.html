@@ -1,5 +1,6 @@
 <div class="card">
-  <img src="{{workshopItem.previewUrl.toString()}}" class="card-img-top mod-icon rounded-start" alt="{{workshopItem.name}}"/>
+  <img src="{{workshopItem.previewUrl.toString()}}" class="card-img-top mod-icon rounded-start"
+       alt="{{workshopItem.name}}"/>
   <div class="card-body">
     <h5 class="card-title">
       <a href="{{workshopItem.url}}" class="d-inline-block text-truncate text-decoration-none" style="max-width:100%"
@@ -24,6 +25,7 @@
       <input type="checkbox" class="form-check-input"
              name="optional_{{workshopCollectionId}}_{{workshopItem.publishedFileId}}"
              id="optional_{{workshopCollectionId}}_{{workshopItem.publishedFileId}}" [disabled]="!canBeToggled"
+             (ngModelChange)="onAddonToggled($event)"
              [(ngModel)]="workshopItem.enabled">
       <label class="form-check-label"
              for="optional_{{workshopCollectionId}}_{{workshopItem.publishedFileId}}">Enabled</label>

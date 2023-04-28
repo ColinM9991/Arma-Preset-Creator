@@ -46,7 +46,9 @@
     </div>
     <div class="form-group">
       <div class="text-center">
-        <button type="button" class="btn btn-primary mx-1" [disabled]="isGeneratingPreset || getTotalSize == 0" (click)="downloadPreset()" title="Downloads a HTML file that can be imported in the Arma 3 Launcher via the Mods, Import tab.">
+        <button type="button" class="btn btn-primary mx-1" [disabled]="isGeneratingPreset || getTotalSize == 0"
+                (click)="downloadPreset()"
+                title="Downloads a HTML file that can be imported in the Arma 3 Launcher via the Mods, Import tab.">
           Download preset
           <span *ngIf="getTotalSize > 0">
             <small>

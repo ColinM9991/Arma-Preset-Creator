@@ -9,6 +9,7 @@ import {SteamWorkshopItem} from "../@core/models/steam-workshop-item";
 import {saveAs} from "file-saver";
 import {combineLatest, map} from "rxjs";
 import {ArmaAddon, ArmaPresetRequest} from "../@core/models/arma-preset-request";
+import {AddonCacheService} from "../@core/services/addon-cache.service";
 
 @Component({
   selector: 'app-parameterised-generator',
@@ -28,7 +29,8 @@ export class ParameterisedGeneratorComponent implements OnInit {
     private presetApi: ArmaPresetApiService,
     private toastrService: ToastrService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private addonCache: AddonCacheService) {
   }
 
   async ngOnInit() {
@@ -67,7 +69,14 @@ export class ParameterisedGeneratorComponent implements OnInit {
         const publishedItem = publishedItems.find(x => x.publishedItemId == collection.publishedFileId)!;
 
         collection.optional = publishedItem.optional;
-        collection.items.forEach(i => i.enabled = !publishedItem.optional);
+        collection.items.forEach(i => {
+          if (!publishedItem.optional) {
+            i.enabled = true;
+            return;
+          }
+
+          i.enabled = this.addonCache.isInCache(collection.publishedFileId, i.publishedFileId);
+        });
 
         return collection;
       });
@@ -144,6 +153,14 @@ export class ParameterisedGeneratorComponent implements OnInit {
       ? true
       : checkbox.checked;
 
-    workshopCollection.items.forEach(i => i.enabled = toggleStatus);
+    workshopCollection.items.forEach(i => {
+      i.enabled = toggleStatus
+
+      if (toggleStatus) {
+        this.addonCache.addToCache(workshopCollection.publishedFileId, i.publishedFileId);
+      } else {
+        this.addonCache.removeFromCache(workshopCollection.publishedFileId, i.publishedFileId);
+      }
+    });
   }
 }
