@@ -1,5 +1,4 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -34,7 +33,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -109,5 +108,8 @@
       }
     }
   },
-  "defaultProject": "ArmaPresetCreator"
+  "defaultProject": "ArmaPresetCreator",
+  "cli": {
+    "analytics": false
+  }
 }

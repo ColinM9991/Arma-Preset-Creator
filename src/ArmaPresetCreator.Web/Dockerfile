@@ -9,7 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 RUN apt-get update -yq \
     && apt-get install curl gnupg -yq \
     && curl -sL https://deb.nodesource.com/setup_16.x | bash \
-    && apt-get install nodejs -yq
+    && apt-get install nodejs -yq 
+
+RUN npm install -g yarn
 
 WORKDIR /src
 COPY ["src/ArmaPresetCreator.Web/ArmaPresetCreator.Web.csproj", "src/ArmaPresetCreator.Web/"]
