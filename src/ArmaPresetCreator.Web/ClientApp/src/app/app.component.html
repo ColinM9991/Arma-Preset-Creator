@@ -4,9 +4,8 @@
       <a class="navbar-brand d-inline-block text-truncate" [routerLink]="['/']">Arma Preset Creator - by ColinM</a>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <select class="form-select" aria-label="Default select example" (change)="onThemeChange($event)">
-            <option value="light">Light</option>
-            <option value="dark" selected>Dark</option>
+          <select class="form-select" aria-label="Default select example" (change)="onThemeChange()" [(ngModel)]="selected_theme">
+            <option *ngFor="let theme of themes" [value]="theme.toLowerCase()">{{theme}}</option>
           </select>
         </li>
         <li class="nav-item">
