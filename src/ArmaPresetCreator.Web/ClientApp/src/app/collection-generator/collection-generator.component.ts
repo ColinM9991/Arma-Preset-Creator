@@ -133,21 +133,25 @@ export class CollectionGeneratorComponent {
     const [mandatoryItems, optionalItems] = this.getDistinctCollectionIds;
 
     const hyperlink = new URL(
-      encodeURIComponent(mandatoryItems),
+      mandatoryItems,
       window.location.href);
 
     if (optionalItems)
-      hyperlink.searchParams.append('optional', encodeURIComponent(optionalItems));
+      hyperlink.searchParams.append('optional', optionalItems);
 
     const name: string = this.getPresetNameValue;
     if (name)
-      hyperlink.searchParams.append('presetName', encodeURIComponent(name));
+      hyperlink.searchParams.append('presetName', name);
 
     return hyperlink;
   }
 
   shareLink() {
     const hyperlink = this.createHyperlink();
+
+    console.log(hyperlink);
+    console.log(hyperlink.toString());
+
     this.clipboard.copy(hyperlink.toString());
     this.toastrService.success('Link copied to clipboard');
   }
