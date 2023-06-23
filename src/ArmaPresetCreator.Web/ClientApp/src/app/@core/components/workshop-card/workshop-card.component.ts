@@ -21,6 +21,7 @@ export class WorkshopCardComponent {
 
     return date;
   }
+
   onAddonToggled(event: any) {
     if (!this.canBeToggled) {
       return;

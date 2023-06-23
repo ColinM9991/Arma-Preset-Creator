@@ -149,9 +149,6 @@ export class CollectionGeneratorComponent {
   shareLink() {
     const hyperlink = this.createHyperlink();
 
-    console.log(hyperlink);
-    console.log(hyperlink.toString());
-
     this.clipboard.copy(hyperlink.toString());
     this.toastrService.success('Link copied to clipboard');
   }

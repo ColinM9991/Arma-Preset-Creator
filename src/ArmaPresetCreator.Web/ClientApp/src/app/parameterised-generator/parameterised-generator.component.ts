@@ -63,7 +63,7 @@ export class ParameterisedGeneratorComponent implements OnInit {
   private async getWorkshopItemsFromIds(publishedItems: PublishedItem[]): Promise<SteamWorkshopCollection[]> {
     let workshopCollections: SteamWorkshopCollection[] = [];
     try {
-      const steamApiResult = await Promise.all<SteamWorkshopCollection>(publishedItems.map(i => this.workshopApi.getSteamCollection(i.publishedItemId)));
+      const steamApiResult = await this.workshopApi.getSteamCollections(publishedItems.map(x => x.publishedItemId));
 
       workshopCollections = steamApiResult.flatMap(collection => {
         const publishedItem = publishedItems.find(x => x.publishedItemId == collection.publishedFileId)!;

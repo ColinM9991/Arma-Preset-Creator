@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ArmaPresetCreator.Web.Models;
@@ -10,6 +11,7 @@ namespace ArmaPresetCreator.Web.Services
     /// <inheritdoc />
     public class SteamApiRepository : ISteamApiRepository
     {
+        private static readonly Task<SteamWorkshopItem[]> EmptyEnumerableTask = Task.FromResult(Array.Empty<SteamWorkshopItem>());
         private readonly ISteamApiService steamApiService;
         private readonly IMapper mapper;
 
@@ -24,20 +26,30 @@ namespace ArmaPresetCreator.Web.Services
             this.mapper = mapper;
         }
 
-        /// <inheritdoc />
-        public async Task<SteamWorkshopItem> GetPublishedItemDetailsAsync(long workshopItemId)
+        public async Task<IEnumerable<SteamWorkshopItem>> GetPublishedItemsDetailsAsync(long[] publishedItemIds)
         {
-            var steamWorkshopPublishedItemDetails = await steamApiService.GetPublishedItemDetailsAsync(workshopItemId);
-            if (steamWorkshopPublishedItemDetails.Response.IsInvalid())
-                return null;
+            var steamApiResponse = await steamApiService.GetPublishedItemDetailsAsync(publishedItemIds);
 
-            var steamWorkshopPublishedFile = steamWorkshopPublishedItemDetails.Response.PublishedFilesDetails[0];
-            var steamWorkshopItem = mapper.Map<SteamWorkshopItem>(steamWorkshopPublishedFile);
+            var steamWorkshopItems = steamApiResponse.Response.PublishedFilesDetails;
+            if (!steamWorkshopItems.Any()) return Enumerable.Empty<SteamWorkshopItem>();
 
-            if (steamWorkshopPublishedFile.NumChildren <= 0) return steamWorkshopItem;
+            var batchJobs = steamWorkshopItems.ToDictionary(x => x,
+                x => x.NumChildren > 0
+                    ? GetChildrenAndIncludeNested(x)
+                    : EmptyEnumerableTask);
 
-            steamWorkshopItem.Items = await GetChildrenAndIncludeNested(steamWorkshopPublishedFile);
-            return steamWorkshopItem;
+            await Task.WhenAll(batchJobs.Values);
+            
+            var workshopItems = new List<SteamWorkshopItem>();
+            foreach (var item in steamWorkshopItems)
+            {
+                var mappedItem = mapper.Map<SteamWorkshopItem>(item);
+                mappedItem.Items = await batchJobs[item];
+
+                workshopItems.Add(mappedItem);
+            }
+
+            return workshopItems;
         }
 
         private async Task<SteamWorkshopItem[]> GetChildrenAndIncludeNested(

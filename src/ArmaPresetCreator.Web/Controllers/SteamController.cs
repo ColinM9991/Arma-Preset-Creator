@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using ArmaPresetCreator.Web.Models;
 using ArmaPresetCreator.Web.Services;
@@ -23,17 +25,17 @@ namespace ArmaPresetCreator.Web.Controllers
         /// <summary>
         /// Contacts the Steam Web API and retrieves the workshop item information including the children items..
         /// </summary>
-        /// <param name="publishedItemId">The workshop item id.</param>
+        /// <param name="publishedItemIds">The workshop item id.</param>
         /// <returns><see cref="SteamWorkshopItem"/> containing the item name and children items.</returns>
         /// <remarks>Produces a 400 Bad Request when any of the mandatory parameters are not supplied.</remarks>
-        [HttpGet("workshop/publisheditems/{publishedItemId}")]
+        [HttpPost("workshop/publisheditems/batch")]
         [Produces("application/json")]
         [ProducesResponseType(400)]
         [ProducesResponseType(406)]
         [ProducesResponseType(typeof(SteamWorkshopItem), 200)]
-        public async Task<IActionResult> GetWorkshopPublishedItemDetails([Required] long publishedItemId)
+        public async Task<IActionResult> GetWorkshopPublishedItemDetails([Required] BatchSteamWorkshopRequest model)
         {
-            var collectionDetails = await steamApiRepository.GetPublishedItemDetailsAsync(publishedItemId);
+            var collectionDetails = await steamApiRepository.GetPublishedItemsDetailsAsync(model.WorkshopItemIds);
             if (collectionDetails == null)
             {
                 return BadRequest("Invalid workshop item id");
